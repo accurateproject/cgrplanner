@@ -5,7 +5,7 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(IMG(_src='http://cgrates.org/img/bg/logo.png', _alt='CGRateS', _style='height:27px'), _class="brand",_href="http://www.web2py.com/")
+response.logo = A(IMG(_src='http://cgrates.org/img/bg/logo.png', _alt='CGRateS', _style='height:27px'), _class="brand",_href="http://cgrplan.appspot.com")
 response.title = 'CGRPlan'
 response.subtitle = ''
 
