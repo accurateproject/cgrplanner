@@ -171,7 +171,7 @@ Actions = db.define_table('actions', #action is reserved
 ActionTimings = db.define_table('action_timing',
                                 Field('tpid', 'reference tplan', readable=False, writable=False),
                                 Field('tag', unique=False),
-                                Field('action_tag', 'reference action'),
+                                Field('action_tag', 'reference actions'),
                                 Field('timing_tag', 'reference timing'),
                                 Field('weight', 'double'),
                                 auth.signature,
