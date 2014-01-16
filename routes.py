@@ -16,7 +16,7 @@
 #    (where APP - is your application directory)
 # 3. restart web2py (or reload routes in web2py admin interfase)
 #
-# YOU CAN COPY THIS FILE TO ANY APPLICATION'S ROOT DIRECTORY WITHOUT CHANGES!
+# YOU CAN COPY THIS FILE TO ANY APLLICATION'S ROOT DIRECTORY WITHOUT CHANGES!
 
 from fileutils import abspath
 from languages import read_possible_languages
@@ -27,9 +27,9 @@ possible_languages = read_possible_languages(abspath('applications', app))
 
 routers = {
     app: dict(
-        default_language = possible_languages['default'][0],
-        languages = [lang for lang in possible_languages
-                           if lang != 'default']
+        #default_language = possible_languages['default'][0],
+        #languages = [lang for lang in possible_languages
+        #                   if lang != 'default']
     )
 }
 

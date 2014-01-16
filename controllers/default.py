@@ -36,7 +36,7 @@ def rating_plans():
 
 def rating_profiles():
     title = T('RatingProfiles')
-    grid = SQLFORM.grid(RatingPlans)
+    grid = SQLFORM.grid(RatingProfiles)
     response.view = 'default/grid.html'
     return locals()
 

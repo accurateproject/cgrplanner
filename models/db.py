@@ -137,7 +137,7 @@ RatingPlans = db.define_table('rating_plan',
                               format='%(tag)s'
 )
 
-RatingProfile = db.define_table('rating_profile',
+RatingProfiles = db.define_table('rating_profile',
                                 Field('tpid', 'reference tplan', readable=False, writable=False),
                                 Field('loadid', readable=False, writable=False),
                                 Field('tenant'),
@@ -148,7 +148,7 @@ RatingProfile = db.define_table('rating_profile',
                                 Field('rating_plan_tag', 'reference rating_plan'),
                                 Field('fallback_subjects'),
                                 auth.signature,
-                                format='%(tag)s'
+                                 format='%(direction)s:%(tor)s:%(subject)s'
 )
 
 Actions = db.define_table('actions', #action is reserved
@@ -186,7 +186,7 @@ ActionTriggers = db.define_table('action_trigger',
                                  Field('threshold_type'),
                                  Field('threshold_value', 'double'),
                                  Field('destination_tag'),
-                                 Field('actions_tag', 'reference action'),
+                                 Field('actions_tag', 'reference actions'),
                                  Field('weight', 'double'),
                                  auth.signature,
                                  format='%(tag)s'
@@ -201,7 +201,7 @@ AccountActions = db.define_table('account_actions',
                                  Field('action_timings_tag', 'reference action_timing'),
                                  Field('action_triggers_tag', 'reference action_trigger'),
                                  auth.signature,
-                                 format='%(tag)s'
+                                 format='%(direction)s:%(tennant)s:%(account)s'
 )
 
 ## after defining tables, uncomment below to enable auditing
