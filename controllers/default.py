@@ -25,6 +25,7 @@ def destinations():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.destination.tpid.default = tpid
     title = T('Destinations')
     grid = SQLFORM.grid(Destinations)
     response.view = 'default/grid.html'
@@ -36,6 +37,7 @@ def timings():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.timing.tpid.default = tpid
     title = T('Timings')
     grid = SQLFORM.grid(Timings)
     response.view = 'default/grid.html'
@@ -43,6 +45,11 @@ def timings():
 
 @auth.requires_login()
 def rates():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
+    db.rate.tpid.default = tpid
     title = T('Rates')
     grid = SQLFORM.grid(Rates)
     response.view = 'default/grid.html'
@@ -54,6 +61,7 @@ def destination_rates():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.destination_rate.tpid.default = tpid
     title = T('DestinationRates')
     grid = SQLFORM.grid(DestinationRates)
     response.view = 'default/grid.html'
@@ -65,6 +73,7 @@ def rating_plans():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.rating_plan.tpid.default = tpid
     title = T('RatingPlans')
     grid = SQLFORM.grid(RatingPlans)
     response.view = 'default/grid.html'
@@ -76,6 +85,7 @@ def rating_profiles():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.rating_profile.tpid.default = tpid
     title = T('RatingProfiles')
     grid = SQLFORM.grid(RatingProfiles)
     response.view = 'default/grid.html'
@@ -87,6 +97,7 @@ def actions():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.actions.tpid.default = tpid
     title = T('Actions')
     grid = SQLFORM.grid(Actions)
     response.view = 'default/grid.html'
@@ -98,6 +109,7 @@ def action_timings():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.action_timing.tpid.default = tpid
     title = T('ActionTimings')
     grid = SQLFORM.grid(ActionTimings)
     response.view = 'default/grid.html'
@@ -109,6 +121,7 @@ def action_triggers():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.action_trigger.tpid.default = tpid
     title = T('ActionTriggers')
     grid = SQLFORM.grid(ActionTriggers)
     response.view = 'default/grid.html'
@@ -120,6 +133,7 @@ def account_actions():
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
+    db.account_actions.tpid.default = tpid
     title = T('AccountActions')
     grid = SQLFORM.grid(AccountActions)
     response.view = 'default/grid.html'
