@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(IMG(_src='http://cgrates.org/img/bg/logo.png', _alt='CGRateS', _style='height:27px'), _class="brand",_href=URL('default', 'index'))
-response.title = 'CGRPlan'
+response.title = 'CGRPlanner'
 response.subtitle = ''
 
 ## read more at http://dev.w3.org/html5/markup/meta.name.html

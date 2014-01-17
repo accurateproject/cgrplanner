@@ -102,7 +102,7 @@ routers = dict(
 
     # base router
     BASE=dict(
-        default_application='cgrplan',
+        default_application='cgrplanner',
     ),
 )
 

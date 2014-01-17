@@ -1,4 +1,4 @@
-# CGRPlan
+# CGRPlanner
 Web tool for creating [CGRateS][] input.
 
 You can find this tool online [here][] or you can install it as a [web2py][] application and use it locally.
