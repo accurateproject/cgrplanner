@@ -81,47 +81,47 @@ use_janrain(auth, filename='private/janrain.key')
 #########################################################################
 
 db.define_table('tplan',
-                Field('name'),
+                Field('name', required=True),
                 auth.signature,
-)
-
-db.define_table('timing',
-                Field('tpid', 'reference tplan', readable=False, writable=False),
-                Field('tag', unique=False),
-                Field('years', 'list:integer', requires=IS_IN_SET(range(2000, 2100), multiple=True)),
-                Field('months', 'list:integer', requires=IS_IN_SET(range(1,13), multiple=True)),
-                Field('month_days', 'list:integer', requires=IS_IN_SET(range(1,32), multiple=True)),
-                Field('week_days', 'list:integer', requires=IS_IN_SET(range(1,8), multiple=True)),
-                Field('day_time', 'time'),
-                auth.signature,
-                format='%(tag)s'
 )
 
 db.define_table('destination',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
-                Field('tag', unique=False),
-                Field('dest_prefix'),
+                Field('tag', unique=False, required=True),
+                Field('dest_prefix', required=True),
+                auth.signature,
+                format='%(tag)s'
+)
+
+db.define_table('timing',
+                Field('tpid', 'reference tplan', readable=False, writable=False),
+                Field('tag', unique=True, required=True),
+                Field('years', 'list:integer', requires=IS_IN_SET(range(2000, 2100), multiple=True)),
+                Field('months', 'list:integer', requires=IS_IN_SET(range(1,13), multiple=True)),
+                Field('month_days', 'list:integer', requires=IS_IN_SET(range(1,32), multiple=True)),
+                Field('week_days', 'list:integer', requires=IS_IN_SET(range(1,8), multiple=True)),
+                Field('day_time', 'time', required=True),
                 auth.signature,
                 format='%(tag)s'
 )
 
 db.define_table('rate',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
-                Field('tag', unique=False),
-                Field('connect_fee', 'double'),
-                Field('rate', 'double'),
-                Field('rate_unit'),
-                Field('rate_increment'),
-                Field('group_interval_start'),
-                Field('rounding_method'),
-                Field('rounding_decimals', 'integer'),
+                Field('tag', unique=True, required=True),
+                Field('connect_fee', 'double', required=True),
+                Field('rate', 'double', required=True),
+                Field('rate_unit', required=True),
+                Field('rate_increment', required=True),
+                Field('group_interval_start', required=True),
+                Field('rounding_method', required=True),
+                Field('rounding_decimals', 'integer', required=True),
                 auth.signature,
                 format='%(tag)s'
 )
 
 db.define_table('destination_rate',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
-                Field('tag', unique=False),
+                Field('tag', unique=False, required=True),
                 Field('destinations_tag', 'reference destination'),
                 Field('rates_tag', 'reference rate'),
                 auth.signature,
@@ -141,11 +141,11 @@ db.define_table('rating_plan',
 db.define_table('rating_profile',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
                 Field('loadid', readable=False, writable=False),
-                Field('tenant'),
-                Field('tor'),
-                Field('direction'),
-                Field('subject'),
-                Field('activation_time', 'datetime'),
+                Field('tenant', required=True),
+                Field('tor', required=True),
+                Field('direction', required=True),
+                Field('subject', required=True),
+                Field('activation_time', 'datetime', required=True),
                 Field('rating_plan_tag', 'reference rating_plan'),
                 Field('fallback_subjects'),
                 auth.signature,
@@ -155,40 +155,40 @@ db.define_table('rating_profile',
 db.define_table('actions', #action is reserved
                 Field('tpid', 'reference tplan', readable=False, writable=False),
                 Field('tag', unique=False),
-                Field('action_name'),
-                Field('balance_type'),
-                Field('direction'),
-                Field('units', 'double'),
+                Field('action_name', required=True),
+                Field('balance_type', required=True),
+                Field('direction', required=True),
+                Field('units', 'double', required=True),
                 Field('expiry_time', 'datetime'),
                 Field('destination_tag', 'reference destination'),
                 Field('rating_subject'),
-                Field('balance_weight', 'double'),
+                Field('balance_weight', 'double', required=True),
                 Field('extra_parameters'),
-                Field('weight', 'double'),
+                Field('weight', 'double', required=True),
                 auth.signature,
                 format='%(tag)s'
 )
 
 db.define_table('action_timing',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
-                Field('tag', unique=False),
+                Field('tag', unique=False, required=True),
                 Field('action_tag', 'reference actions'),
                 Field('timing_tag', 'reference timing'),
-                Field('weight', 'double'),
+                Field('weight', 'double', required=True),
                 auth.signature,
                 format='%(tag)s'
 )
 
 db.define_table('action_trigger',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
-                Field('tag', unique=False),
-                Field('balance_type'),
-                Field('direction'),
-                Field('threshold_type'),
-                Field('threshold_value', 'double'),
-                Field('destination_tag'),
+                Field('tag', unique=False, required=True),
+                Field('balance_type', required=True),
+                Field('direction', required=True),
+                Field('threshold_type', required=True),
+                Field('threshold_value', 'double', required=True),
+                Field('destination_tag', required=True),
                 Field('actions_tag', 'reference actions'),
-                Field('weight', 'double'),
+                Field('weight', 'double', required=True),
                 auth.signature,
                 format='%(tag)s'
 )
@@ -196,9 +196,9 @@ db.define_table('action_trigger',
 db.define_table('account_actions',
                 Field('tpid', 'reference tplan', readable=False, writable=False),
                 Field('loadid', readable=False, writable=False),
-                Field('tenant'),
-                Field('account'),
-                Field('direction'),
+                Field('tenant', required=True),
+                Field('account', required=True),
+                Field('direction', required=True),
                 Field('action_timings_tag', 'reference action_timing'),
                 Field('action_triggers_tag', 'reference action_trigger'),
                 auth.signature,
@@ -218,7 +218,16 @@ ActionTimings = (db.action_timing.created_by == auth.user_id) & (db.action_timin
 ActionTriggers = (db.action_trigger.created_by == auth.user_id) & (db.action_trigger.tpid == session.tpid)
 AccountActions = (db.account_actions.created_by == auth.user_id) & (db.account_actions.tpid == session.tpid)
 
-
+db.destination.id.readable = False
+db.timing.id.readable = False
+db.rate.id.readable = False
+db.destination_rate.id.readable = False
+db.rating_plan.id.readable = False
+db.rating_profile.id.readable = False
+db.actions.id.readable = False
+db.action_timing.id.readable = False
+db.action_trigger.id.readable = False
+db.account_actions.id.readable = False
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
