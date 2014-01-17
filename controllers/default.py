@@ -3,6 +3,7 @@
 def index():
     return dict()
 
+@auth.requires_login()
 def home():
     plans = db(TPlans).select()
     return locals()
