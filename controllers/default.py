@@ -20,123 +20,40 @@ def select_plan():
     redirect(URL('home'))
 
 @auth.requires_login()
-def destinations():
+def manage():
     tpid = session.tpid
     if not tpid or not db.tplan(tpid):
         session.flash = T('Please select a plan')
         redirect(URL('home'))
     db.destination.tpid.default = tpid
-    title = T('Destinations')
-    grid = SQLFORM.grid(Destinations)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def timings():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.timing.tpid.default = tpid
-    title = T('Timings')
-    grid = SQLFORM.grid(Timings)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def rates():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.rate.tpid.default = tpid
-    title = T('Rates')
-    grid = SQLFORM.grid(Rates)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def destination_rates():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.destination_rate.tpid.default = tpid
-    title = T('DestinationRates')
-    grid = SQLFORM.grid(DestinationRates)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def rating_plans():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.rating_plan.tpid.default = tpid
-    title = T('RatingPlans')
-    grid = SQLFORM.grid(RatingPlans)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def rating_profiles():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.rating_profile.tpid.default = tpid
-    title = T('RatingProfiles')
-    grid = SQLFORM.grid(RatingProfiles)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def actions():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.actions.tpid.default = tpid
-    title = T('Actions')
-    grid = SQLFORM.grid(Actions)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def action_timings():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.action_timing.tpid.default = tpid
-    title = T('ActionTimings')
-    grid = SQLFORM.grid(ActionTimings)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def action_triggers():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.action_trigger.tpid.default = tpid
-    title = T('ActionTriggers')
-    grid = SQLFORM.grid(ActionTriggers)
-    response.view = 'default/grid.html'
-    return locals()
-
-@auth.requires_login()
-def account_actions():
-    tpid = session.tpid
-    if not tpid or not db.tplan(tpid):
-        session.flash = T('Please select a plan')
-        redirect(URL('home'))
     db.account_actions.tpid.default = tpid
-    title = T('AccountActions')
-    grid = SQLFORM.grid(AccountActions)
-    response.view = 'default/grid.html'
+
+    defined_tables = {
+        'destinations': Destinations,
+        'timings': Timings,
+        'rates': Rates,
+        'destination_rates': DestinationRates,
+        'rating_plans': RatingPlans,
+        'rating_profiles': RatingProfiles,
+        'actions': Actions,
+        'action_timings': ActionTimings,
+        'action_triggers': ActionTriggers,
+        'account_actions': AccountActions,
+    }
+    table = a0
+    if not table in defined_tables:
+        session.flash = T('Invalid table')
+        redirect(URL('home'))
+    title = " ".join(table.split("_")).title()
+    grid = SQLFORM.grid(defined_tables[table],args=request.args[:1])
     return locals()
 
 def user():

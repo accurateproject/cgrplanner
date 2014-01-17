@@ -24,16 +24,16 @@ response.google_analytics_id = None
 
 response.menu = [
     (T('Home'), False, URL('default', 'home'), []),
-    (T('Destinations'), False, URL('default', 'destinations'), []),
-    (T('Timings'), False, URL('default', 'timings'), []),
-    (T('Rates'), False, URL('default', 'rates'), []),
-    (T('DestinationRates'), False, URL('default', 'destination_rates'), []),
-    (T('RatingPlans'), False, URL('default', 'rating_plans'), []),
-    (T('RatingProfiles'), False, URL('default', 'rating_profiles'), []),
-    (T('Actions'), False, URL('default', 'actions'), []),
-    (T('ActionTimings'), False, URL('default', 'action_timings'), []),
-    (T('ActionTriggers'), False, URL('default', 'action_triggers'), []),
-    (T('AccountActions'), False, URL('default', 'account_actions'), []),
+    (T('Destinations'), False, URL('default', 'manage', args='destinations'), []),
+    (T('Timings'), False, URL('default', 'manage', args='timings'), []),
+    (T('Rates'), False, URL('default', 'manage', args='rates'), []),
+    (T('DestinationRates'), False, URL('default', 'manage', args='destination_rates'), []),
+    (T('RatingPlans'), False, URL('default', 'manage', args='rating_plans'), []),
+    (T('RatingProfiles'), False, URL('default', 'manage', args='rating_profiles'), []),
+    (T('Actions'), False, URL('default', 'manage', args='actions'), []),
+    (T('ActionTimings'), False, URL('default', 'manage', args='action_timings'), []),
+    (T('ActionTriggers'), False, URL('default', 'manage', args='action_triggers'), []),
+    (T('AccountActions'), False, URL('default', 'manage', args='account_actions'), []),
 ]
 
 if "auth" in locals(): auth.wikimenu() 

@@ -194,16 +194,16 @@ db.define_table('action_trigger',
 )
 
 db.define_table('account_actions',
-                 Field('tpid', 'reference tplan', readable=False, writable=False),
-                 Field('loadid', readable=False, writable=False),
-                 Field('tenant'),
-                 Field('account'),
-                 Field('direction'),
-                 Field('action_timings_tag', 'reference action_timing'),
-                 Field('action_triggers_tag', 'reference action_trigger'),
-                 auth.signature,
-                 format='%(direction)s:%(tennant)s:%(account)s'
- )
+                Field('tpid', 'reference tplan', readable=False, writable=False),
+                Field('loadid', readable=False, writable=False),
+                Field('tenant'),
+                Field('account'),
+                Field('direction'),
+                Field('action_timings_tag', 'reference action_timing'),
+                Field('action_triggers_tag', 'reference action_trigger'),
+                auth.signature,
+                format='%(direction)s:%(tennant)s:%(account)s'
+)
 
 a0, a1 = request.args(0), request.args(1)
 TPlans = (db.tplan.created_by == auth.user_id)
@@ -217,6 +217,8 @@ Actions = (db.actions.created_by == auth.user_id) & (db.actions.tpid == session.
 ActionTimings = (db.action_timing.created_by == auth.user_id) & (db.action_timing.tpid == session.tpid)
 ActionTriggers = (db.action_trigger.created_by == auth.user_id) & (db.action_trigger.tpid == session.tpid)
 AccountActions = (db.account_actions.created_by == auth.user_id) & (db.account_actions.tpid == session.tpid)
+
+
 
 ## after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)
