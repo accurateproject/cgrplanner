@@ -1,64 +1,124 @@
 # -*- coding: utf-8 -*-
 
 def index():
-    text = 'cgrates'
+    return dict()
+
+def home():
+    plans = db(TPlans).select()
     return locals()
 
+@auth.requires_login()
+def edit_plan():
+    form = crud.update(db.tplan, a0, next=URL('home'))
+    return locals()
+
+@auth.requires_login()
+def select_plan():
+    session.tpid = a0
+    session.flash = T('Plan successfully selected')
+    redirect(URL('home'))
+
+@auth.requires_login()
 def destinations():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('Destinations')
     grid = SQLFORM.grid(Destinations)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def timings():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('Timings')
     grid = SQLFORM.grid(Timings)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def rates():
     title = T('Rates')
     grid = SQLFORM.grid(Rates)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def destination_rates():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('DestinationRates')
     grid = SQLFORM.grid(DestinationRates)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def rating_plans():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('RatingPlans')
     grid = SQLFORM.grid(RatingPlans)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def rating_profiles():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('RatingProfiles')
     grid = SQLFORM.grid(RatingProfiles)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def actions():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('Actions')
     grid = SQLFORM.grid(Actions)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def action_timings():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('ActionTimings')
     grid = SQLFORM.grid(ActionTimings)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def action_triggers():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('ActionTriggers')
     grid = SQLFORM.grid(ActionTriggers)
     response.view = 'default/grid.html'
     return locals()
 
+@auth.requires_login()
 def account_actions():
+    tpid = session.tpid
+    if not tpid or not db.tplan(tpid):
+        session.flash = T('Please select a plan')
+        redirect(URL('home'))
     title = T('AccountActions')
     grid = SQLFORM.grid(AccountActions)
     response.view = 'default/grid.html'
@@ -82,12 +142,12 @@ def user():
     return dict(form=auth())
 
 @cache.action()
-def downhtml():
+def download():
     """
-    allows downhtmling of uphtmled files
-    http://..../[app]/default/downhtml/[filename]
+    allows downhtmling of uploaded files
+    http://..../[app]/default/download/[filename]
     """
-    return response.downhtml(request, db)
+    return response.download(request, db)
 
 
 def call():

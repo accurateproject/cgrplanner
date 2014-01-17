@@ -5,7 +5,7 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(IMG(_src='http://cgrates.org/img/bg/logo.png', _alt='CGRateS', _style='height:27px'), _class="brand",_href="http://cgrplan.appspot.com")
+response.logo = A(IMG(_src='http://cgrates.org/img/bg/logo.png', _alt='CGRateS', _style='height:27px'), _class="brand",_href=URL('default', 'index'))
 response.title = 'CGRPlan'
 response.subtitle = ''
 
@@ -23,7 +23,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), []),
+    (T('Home'), False, URL('default', 'home'), []),
     (T('Destinations'), False, URL('default', 'destinations'), []),
     (T('Timings'), False, URL('default', 'timings'), []),
     (T('Rates'), False, URL('default', 'rates'), []),

@@ -1,0 +1,18 @@
+{{extend 'layout.html'}}
+
+<h3>{{=T('Your plans')}}</h3>
+
+<a class="btn btn-large btn-primary pull-right" href="{{=URL('default', 'edit_plan')}}">Create new plan</a>
+
+<table>
+  {{if not plans:}}
+  <p>Please <a href="{{=URL('default', 'edit_plan')}}">create</a> a plan</p>
+  {{else:}}
+  {{for p in plans:}}
+  <tr>
+    <td><a href="{{=URL('default', 'select_plan', args=p.id)}}">{{=p.name}}</a></td>
+    <td><a class="btn btn-mini" href="{{=URL('default', 'edit_plan', args=p.id)}}"><i class="icon-edit"></i> {{=T('Edit')}}</a></td>
+  </tr>
+  {{pass}}
+  {{pass}}
+</table>
